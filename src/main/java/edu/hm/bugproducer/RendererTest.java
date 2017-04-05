@@ -8,6 +8,8 @@ import static org.junit.Assert.assertEquals;
 public class RendererTest {
     private SomeClass toRender;
     private Renderer renderer;
+    private ArrayRenderer arrayRenderer;
+
 
     @Before
     public void setUp() {
@@ -19,7 +21,7 @@ public class RendererTest {
     public void testRendering() throws Exception {
         assertEquals("Instance of edu.hm.bugproducer.SomeClass:\n" +
                         "foo (Type int): 5\narray (Type int[]) [1, 2, 3, ]\n" +
-                        "date (Type java .util.Date): Fri Jan 02 11:17:36 CET 1970\n ",
+                        "date (Type java.util.Date): Fri Jan 02 11:17:36 CET 1970\n ",
                 renderer.render());
     }
 }

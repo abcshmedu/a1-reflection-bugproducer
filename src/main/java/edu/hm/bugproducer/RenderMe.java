@@ -5,4 +5,6 @@ import java.lang.annotation.RetentionPolicy;
 
 public @Retention(RetentionPolicy.RUNTIME)  @interface RenderMe {
 
+    String with() default "";
+
 }
