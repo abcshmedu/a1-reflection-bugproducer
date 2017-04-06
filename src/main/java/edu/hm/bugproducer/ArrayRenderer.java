@@ -9,7 +9,7 @@ public class ArrayRenderer {
 
     }
 
-    public String render(int[] input){
+    public String renderA(int[] input){
         String result = "";
         Class<?> array = input.getClass();
 

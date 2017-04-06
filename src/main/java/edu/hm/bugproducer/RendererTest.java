@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 public class RendererTest {
     private SomeClass toRender;
     private Renderer renderer;
-    private ArrayRenderer arrayRenderer;
+   // private ArrayRenderer arrayRenderer;
 
 
     @Before
