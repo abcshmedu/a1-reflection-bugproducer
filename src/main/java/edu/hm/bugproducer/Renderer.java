@@ -28,15 +28,7 @@ public class Renderer {
                 attribute.setAccessible(true);
 
                 if (attribute.getAnnotation(RenderMe.class).with().equals("")) {
-
-
-
-                    try {
-                        result += attribute.getName() + " (Type " + attribute.getType().getCanonicalName() + "): " + attribute.get(input);
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
-
+                    result += attribute.getName() + " (Type " + attribute.getType().getCanonicalName() + "): " + attribute.get(input);
 
                 } else {
                     //Change this => crash e.g. for String
@@ -44,12 +36,12 @@ public class Renderer {
                     result += attribute.getName() + " (Type " + attribute.getType().getCanonicalName() + ") ";
 
                     String ClassName = attribute.getAnnotation(RenderMe.class).with();
-                    Object  toRendernArray= attribute.get(input);
+                    Object toRendernArray = attribute.get(input);
                     Class<?> specialRenderClass = Class.forName(ClassName);
                     Object specialRenderObject = specialRenderClass.getConstructor().newInstance();
-                    Method method =specialRenderClass.getMethod("render",toRendernArray.getClass());
-                    Object resultObj=method.invoke(specialRenderObject,toRendernArray);
-                    result+=(String) resultObj;
+                    Method method = specialRenderClass.getMethod("render", toRendernArray.getClass());
+                    Object resultObj = method.invoke(specialRenderObject, toRendernArray);
+                    result += (String) resultObj;
 
                 }
             }
