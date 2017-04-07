@@ -16,6 +16,7 @@ public class Renderer {
 
         Class<?> cut = input.getClass();
 
+
         Field[] attributes = cut.getDeclaredFields();
 
         String result = "Instance of " + cut.getCanonicalName() + "\n";
@@ -38,22 +39,15 @@ public class Renderer {
 
 
                 } else {
-                    String ClassName = attribute.getAnnotation(RenderMe.class).with();
+                    result += attribute.getName() + " (Type " + attribute.getType().getCanonicalName() + ") ";
 
+                    String ClassName = attribute.getAnnotation(RenderMe.class).with();
+                    Object  toRendernArray= attribute.get(input);
                     Class<?> specialRenderClass = Class.forName(ClassName);
                     Object specialRenderObject = specialRenderClass.getConstructor().newInstance();
-
-                    Method[] methods = specialRenderClass.getDeclaredMethods();
-
-                    for (Method method : methods) {
-
-
-                        method.invoke(specialRenderObject,new int[]{});
-
-
-
-                    }
-
+                    Method method =specialRenderClass.getMethod("render",toRendernArray.getClass());
+                    Object resultObj=method.invoke(specialRenderObject,toRendernArray);
+                    result+=(String) resultObj;
 
                 }
             }

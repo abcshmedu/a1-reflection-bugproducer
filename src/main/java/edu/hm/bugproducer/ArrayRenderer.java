@@ -9,11 +9,17 @@ public class ArrayRenderer {
 
     }
 
-    public String renderA(int[] input){
-        String result = "";
-        Class<?> array = input.getClass();
+    public String render(int[] input){
+        String result = "[";
 
-        result +=" DAS ist eine Test!";
+        for(int i=0; i<input.length;i++){
+        result+=input[i]+", ";
+
+        }
+
+        result+="]";
+
+
 
 
         return result;
