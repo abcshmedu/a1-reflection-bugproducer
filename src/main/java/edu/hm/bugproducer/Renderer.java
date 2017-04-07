@@ -32,7 +32,7 @@ public class Renderer {
 
 
                     try {
-                        result += attribute.getName() + " (Type " + attribute.getType().getName() + "): " + attribute.get(input);
+                        result += attribute.getName() + " (Type " + attribute.getType().getCanonicalName() + "): " + attribute.get(input);
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     }
@@ -57,7 +57,7 @@ public class Renderer {
             result += "\n";
 
         }
-        System.out.printf("result: " + result);
+
         return result;
 
     }
