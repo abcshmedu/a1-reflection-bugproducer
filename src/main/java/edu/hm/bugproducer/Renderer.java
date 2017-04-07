@@ -39,6 +39,8 @@ public class Renderer {
 
 
                 } else {
+                    //Change this => crash e.g. for String
+                    //Perhaps move into ArrayRenderer
                     result += attribute.getName() + " (Type " + attribute.getType().getCanonicalName() + ") ";
 
                     String ClassName = attribute.getAnnotation(RenderMe.class).with();
