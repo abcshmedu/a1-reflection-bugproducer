@@ -28,7 +28,8 @@ public class RendererTest {
 
             assertEquals("Instance of edu.hm.bugproducer.SomeClass\n" +
                             "foo (Type int): 3\narray (Type int[]) [1, 2, 3, ]\n" +
-                            "date (Type java.util.Date): Fri Jan 02 11:17:36 CET 1970\n",
+                            "date (Type java.util.Date): Fri Jan 02 11:17:36 CET 1970\n" +
+                            "withoutParameter",
                     renderer.render());
         }
     }
@@ -65,7 +66,8 @@ public class RendererTest {
 
             assertEquals("Instance of edu.hm.bugproducer.SomeClass\n" +
                             "foo (Type int): " + foo + "\narray (Type int[]) [" + intArray[0] + ", " + intArray[1] + ", " + intArray[2] + ", ]\n" +
-                            "date (Type java.util.Date): " + date + "\n",
+                            "date (Type java.util.Date): " + date + "\n" +
+                            "withoutParameter",
                     renderer.render());
         }
 
@@ -98,7 +100,8 @@ public class RendererTest {
 
             assertEquals("Instance of edu.hm.bugproducer.SomeClass\n" +
                             "foo (Type int): " + foo + "\narray (Type int[]) []\n" +
-                            "date (Type java.util.Date): Fri Jan 02 11:17:36 CET 1970\n",
+                            "date (Type java.util.Date): Fri Jan 02 11:17:36 CET 1970\n" +
+                            "withoutParameter",
                     new Renderer(toRender).render());
         }
 
@@ -106,7 +109,6 @@ public class RendererTest {
 
     @RunWith(Parameterized.class)
     public static class ArrayParameterizedPart {
-
 
         private SomeClass toRender;
         private Renderer renderer;
@@ -122,7 +124,6 @@ public class RendererTest {
             return Arrays.asList(new Object[][]{
                     {null}});
         }
-
 
         @Test(expected = NullPointerException.class)
         public void testArrayNullPointer() throws InvocationTargetException, NoSuchMethodException, ClassNotFoundException, InstantiationException, IllegalAccessException {

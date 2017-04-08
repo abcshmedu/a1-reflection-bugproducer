@@ -30,4 +30,9 @@ public class SomeClass {
         this.array = array;
         this.date = date;
     }
+
+    @RenderMe
+    public String withoutParameter(){
+        return "withoutParameter";
+    }
 }

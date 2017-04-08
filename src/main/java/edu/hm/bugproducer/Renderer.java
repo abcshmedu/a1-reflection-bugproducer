@@ -14,12 +14,12 @@ public class Renderer {
 
     public String render() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, ClassNotFoundException {
 
-        Class<?> cut = input.getClass();
+        Class<?> classToRender = input.getClass();
 
 
-        Field[] attributes = cut.getDeclaredFields();
+        Field[] attributes = classToRender.getDeclaredFields();
 
-        String result = "Instance of " + cut.getCanonicalName() + "\n";
+        StringBuilder result = new StringBuilder("Instance of " + classToRender.getCanonicalName() + "\n");
 
         for (Field attribute : attributes) {
 
@@ -28,12 +28,12 @@ public class Renderer {
                 attribute.setAccessible(true);
 
                 if (attribute.getAnnotation(RenderMe.class).with().equals("")) {
-                    result += attribute.getName() + " (Type " + attribute.getType().getCanonicalName() + "): " + attribute.get(input);
+                    result.append(attribute.getName()).append(" (Type ").append(attribute.getType().getCanonicalName()).append("): ").append(attribute.get(input));
 
                 } else {
                     //Change this => crash e.g. for String
                     //Perhaps move into ArrayRenderer
-                    result += attribute.getName() + " (Type " + attribute.getType().getCanonicalName() + ") ";
+                    result.append(attribute.getName()).append(" (Type ").append(attribute.getType().getCanonicalName()).append(") ");
 
                     String ClassName = attribute.getAnnotation(RenderMe.class).with();
                     Object toRendernArray = attribute.get(input);
@@ -41,16 +41,29 @@ public class Renderer {
                     Object specialRenderObject = specialRenderClass.getConstructor().newInstance();
                     Method method = specialRenderClass.getMethod("render", toRendernArray.getClass());
                     Object resultObj = method.invoke(specialRenderObject, toRendernArray);
-                    result += (String) resultObj;
+                    result.append((String) resultObj);
 
                 }
             }
 
-            result += "\n";
+            result.append("\n");
 
         }
 
-        return result;
+        Method[] methods = classToRender.getMethods();
+
+        for (Method method : methods) {
+            if (method.getAnnotation(RenderMe.class) != null) {
+                Object ott = classToRender.getConstructor().newInstance();
+                try {
+                    result.append((String) method.invoke(ott));
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return result.toString();
 
     }
 }
