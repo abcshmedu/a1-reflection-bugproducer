@@ -5,22 +5,26 @@ package edu.hm.bugproducer;
  */
 public class ArrayRenderer {
 
-    public ArrayRenderer(){
+    /**
+     * Default Constructor.
+     */
+    public ArrayRenderer() {
 
     }
 
-    public String render(int[] input){
+    /**
+     * Method to render int arrays.
+     *
+     * @param input int array
+     * @return int arrays values
+     */
+    public String render(int[] input) {
         String result = "[";
 
-        for(int i=0; i<input.length;i++){
-        result+=input[i]+", ";
-
+        for (int i = 0; i < input.length; i++) {
+            result += input[i] + ", ";
         }
-
-        result+="]";
-
-
-
+        result += "]";
 
         return result;
     }

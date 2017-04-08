@@ -4,17 +4,36 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+/**
+ * Renderclass.
+ */
 public class Renderer {
     private Object input;
 
+
+    /**
+     * Costum constructor.
+     *
+     * @param input object to render
+     */
     public Renderer(Object input) {
 
         this.input = input;
     }
 
+    /**
+     * Method for rendering.
+     *
+     * @return result string of the object.
+     * @throws NoSuchMethodException     method doesnt exist
+     * @throws IllegalAccessException    illegal access
+     * @throws InvocationTargetException cant invoke method
+     * @throws InstantiationException    cant create instance
+     * @throws ClassNotFoundException    class not found
+     */
     public String render() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, ClassNotFoundException {
 
-        Class<?> classToRender = input.getClass();
+        Class< ? > classToRender = input.getClass();
 
 
         Field[] attributes = classToRender.getDeclaredFields();
@@ -35,9 +54,9 @@ public class Renderer {
                     //Perhaps move into ArrayRenderer
                     result.append(attribute.getName()).append(" (Type ").append(attribute.getType().getCanonicalName()).append(") ");
 
-                    String ClassName = attribute.getAnnotation(RenderMe.class).with();
+                    String className = attribute.getAnnotation(RenderMe.class).with();
                     Object toRendernArray = attribute.get(input);
-                    Class<?> specialRenderClass = Class.forName(ClassName);
+                    Class< ? > specialRenderClass = Class.forName(className);
                     Object specialRenderObject = specialRenderClass.getConstructor().newInstance();
                     Method method = specialRenderClass.getMethod("render", toRendernArray.getClass());
                     Object resultObj = method.invoke(specialRenderObject, toRendernArray);
